@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | Flavor Haven</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="signup.css">
+</head>
+
+<body class="luxury-split-screen">
+
+    <div class="left-login-panel">
+        <div class="luxury-login-card">
+
+            <div class="brand-identity">
+                <div class="minimal-utensil-circle">
+                    <i class="fa-solid fa-utensils"></i>
+                </div>
+                <h1 class="brand-title">Flavor Haven</h1>
+                <p class="brand-tagline">Create Your Account</p>
+            </div>
+
+            <form id="signupForm" class="login-core-form" novalidate>
+                <div class="form-input-group">
+                    <label for="username">USERNAME</label>
+                    <div class="field-wrapper">
+                        <i class="fa-regular fa-user field-icon"></i>
+                        <input type="text" id="username" placeholder="Username" required>
+                    </div>
+                    <span class="field-error" id="usernameError"></span>
+                </div>
+
+                <div class="form-input-group">
+                    <label for="email">EMAIL ADDRESS</label>
+                    <div class="field-wrapper">
+                        <i class="fa-regular fa-envelope field-icon"></i>
+                        <input type="email" id="email" placeholder="Email Address" required>
+                    </div>
+                    <span class="field-error" id="emailError"></span>
+                </div>
+
+                <div class="form-input-group">
+                    <label for="password">PASSWORD</label>
+                    <div class="field-wrapper">
+                        <i class="fa-solid fa-lock field-icon"></i>
+                        <input type="password" id="password" placeholder="Password" required minlength="4">
+                    </div>
+                    <span class="field-error" id="passwordError"></span>
+                </div>
+
+                <div class="form-input-group">
+                    <label for="confirmPassword">CONFIRM PASSWORD</label>
+                    <div class="field-wrapper">
+                        <i class="fa-solid fa-lock field-icon"></i>
+                        <input type="password" id="confirmPassword" placeholder="Confirm Password" required
+                            minlength="4">
+                    </div>
+                    <span class="field-error" id="confirmPasswordError"></span>
+                </div>
+
+                <button type="submit" class="gold-pill-btn" id="signupBtn">SIGN UP</button>
+            </form>
+
+            <div class="card-action-links">
+                <p class="signup-text">
+                    Already have an account?
+                    <a href="login.html">Login</a>
+                </p>
+            </div>
+
+            <p id="msg"></p>
+        </div>
+    </div>
+
+    <div class="right-scenery-panel">
+        <div class="scenery-menu-cards">
+
+            <h2 class="menu-section-title">CHEF'S SELECTION</h2>
+
+            <div class="menu-glass-card">
+                <div class="food-thumbnail">
+                    <img src="Images/Image1.jpg" alt="Searing Scallops" onerror="this.style.display='none'">
+                </div>
+                <div class="food-details">
+                    <h3>SEARING SCALLOPS</h3>
+                </div>
+            </div>
+
+            <div class="menu-glass-card">
+                <div class="food-thumbnail">
+                    <img src="Images/Image2.jpg" alt="Truffle Wagyu" onerror="this.style.display='none'">
+                </div>
+                <div class="food-details">
+                    <h3>TRUFFLE WAGYU</h3>
+                </div>
+            </div>
+
+            <div class="menu-glass-card">
+                <div class="food-thumbnail">
+                    <img src="Images/Image3.jpg" alt="Artisanal Dessert" onerror="this.style.display='none'">
+                </div>
+                <div class="food-details">
+                    <h3>ARTISANAL DESSERT</h3>
+                </div>
+            </div>
+
+            <div class="menu-glass-card">
+                <div class="food-thumbnail">
+                    <img src="Images/Image4.jpg" alt="Peking Duck" onerror="this.style.display='none'">
+                </div>
+                <div class="food-details">
+                    <h3>PEKING DUCK</h3>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="signup.js"></script>
+</body>
+
+</html>

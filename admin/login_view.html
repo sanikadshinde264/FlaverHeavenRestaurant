@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login | Flaver Heaven</title>
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <div class="login-shell">
+    <div class="login-panel login-form-panel">
+      <div class="login-card">
+        <div class="brand-block">
+          <div class="brand-mark">✦</div>
+          <h2>Admin Access</h2>
+          <p>Secure login for Flaver Heaven management.</p>
+        </div>
+
+        <?php if (!empty($error)): ?>
+          <p class="error"><?php echo htmlspecialchars($error); ?></p>
+        <?php endif; ?>
+
+        <form action="login.php" method="post" class="field">
+          <label for="username">Username / Email</label>
+          <input type="text" id="username" name="username" required />
+
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required />
+
+          <button class="btn" type="submit">Login</button>
+        </form>
+
+        <p style="margin-top:16px;font-size:.85rem;color:var(--muted)">
+          New admin? <a href="signup.php" style="color:var(--gold-2)">Sign Up</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="login-panel login-visual-panel">
+      <img src="../Images/AdminBackground.jpg" alt="Admin background" />
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment Management | Flaver Heaven</title>
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+<div class="admin-shell">
+  <?php include_once 'sidebar.php'; ?>
+  <main class="main">
+    <div class="topbar"><div><h2 class="page-title">Payment Management</h2><p class="page-subtitle">Review payments, revenue, and customers who haven't paid yet.</p></div></div>
+    <div class="panel">
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>No.</th><th>Customer</th><th>Email</th><th>Type</th><th>Amount</th><th>Method</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
+          <tbody>
+            <?php $i = 0; foreach ($rows as $row): $i++; ?>
+              <tr>
+                <td><?php echo $i; ?></td>
+                <td><?php echo htmlspecialchars($row['username']); ?></td>
+                <td><?php echo htmlspecialchars($row['email']); ?></td>
+                <td><?php echo htmlspecialchars(ucfirst($row['payment_type'])); ?></td>
+                <td>₹<?php echo number_format((float)$row['amount'], 2); ?></td>
+                <td><?php echo htmlspecialchars($row['payment_method']); ?></td>
+                <td><span class="badge badge-<?php echo htmlspecialchars($row['payment_status']); ?>"><?php echo htmlspecialchars(ucfirst($row['payment_status'])); ?></span></td>
+                <td><?php echo htmlspecialchars($row['payment_date'] ?: $row['created_at']); ?></td>
+                <td class="action-col">
+                  <form method="post" class="action-row">
+                    <input type="hidden" name="payment_id" value="<?php echo (int)$row['payment_id']; ?>" />
+                    <input type="hidden" name="update_payment_status" value="1" />
+                    <button class="btn" type="submit" name="payment_status" value="paid">Paid</button>
+                    <button class="btn-secondary" type="submit" name="payment_status" value="unpaid">Unpaid</button>
+                  </form>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

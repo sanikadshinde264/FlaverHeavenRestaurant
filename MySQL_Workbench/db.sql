@@ -1,0 +1,85 @@
+CREATE DATABASE IF NOT EXISTS flaverheaven CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE flaverheaven;
+
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(100) NOT NULL UNIQUE,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  role ENUM('user','admin') NOT NULL DEFAULT 'user',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS menu_items (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(150) NOT NULL,
+  description TEXT,
+  price DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+  category VARCHAR(100) NOT NULL,
+  type ENUM('veg','nonveg','drinks','desserts') NOT NULL DEFAULT 'veg',
+  image VARCHAR(255) DEFAULT NULL,
+  available TINYINT(1) NOT NULL DEFAULT 1,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS orders (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  customer_name VARCHAR(150) NOT NULL,
+  mobile VARCHAR(50) NOT NULL,
+  address TEXT NOT NULL,
+  delivery_date DATE DEFAULT NULL,
+  delivery_time TIME DEFAULT NULL,
+  items_json TEXT NOT NULL,
+  special_instructions TEXT DEFAULT NULL,
+  total_amount DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+  payment_method VARCHAR(100) NOT NULL,
+  payment_status VARCHAR(50) NOT NULL DEFAULT 'pending',
+  order_status VARCHAR(50) NOT NULL DEFAULT 'pending',
+  payment_date DATE DEFAULT NULL,
+  payment_time TIME DEFAULT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS reservations (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  name VARCHAR(150) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  phone VARCHAR(50) NOT NULL,
+  reservation_date DATE NOT NULL,
+  reservation_time VARCHAR(100) NOT NULL,
+  guests INT NOT NULL DEFAULT 1,
+  event_type VARCHAR(100) DEFAULT NULL,
+  status VARCHAR(50) NOT NULL DEFAULT 'pending',
+  payment_method VARCHAR(100) DEFAULT NULL,
+  payment_status VARCHAR(50) NOT NULL DEFAULT 'pending',
+  payment_date DATE DEFAULT NULL,
+  payment_time TIME DEFAULT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS payments (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  order_id INT DEFAULT NULL,
+  reservation_id INT DEFAULT NULL,
+  amount DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+  payment_method VARCHAR(100) NOT NULL,
+  payment_status VARCHAR(50) NOT NULL DEFAULT 'unpaid',
+  payment_type VARCHAR(50) NOT NULL DEFAULT 'food',
+  payment_date DATE DEFAULT NULL,
+  payment_time TIME DEFAULT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO users (username, email, password_hash, role)
+SELECT 'admin', 'admin@flaverheaven.com', '$2y$10$og0ZPeiz8c4Txwcd9Nig9O8l2QL.qyUYOTYyhx46mJuc7bm.3w0.6', 'admin'
+WHERE NOT EXISTS (SELECT 1 FROM users WHERE role = 'admin');

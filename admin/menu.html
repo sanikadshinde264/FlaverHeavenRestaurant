@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menu Management | Flaver Heaven</title>
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+<div class="admin-shell">
+  <?php include_once 'sidebar.php'; ?>
+  <main class="main">
+    <div class="topbar">
+      <div><h2 class="page-title">Menu Management</h2><p class="page-subtitle">Add and manage restaurant dishes.</p></div>
+    </div>
+    <div class="panel">
+      <div class="panel-header">
+        <h3 class="panel-title">Food Items</h3>
+        <a class="btn" href="menu_form.php">Add Food Item</a>
+      </div>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>No.</th><th>Name</th><th>Category</th><th>Price</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody>
+            <?php foreach ($items as $item): ?>
+              <tr>
+                <td><?php echo (int)$item['id']; ?></td>
+                <td><?php echo htmlspecialchars($item['name']); ?></td>
+                <td><?php echo htmlspecialchars($item['category']); ?></td>
+                <td>₹<?php echo number_format((float)$item['price'], 2); ?></td>
+                <td><?php echo (int)$item['available'] ? 'Available' : 'Unavailable'; ?></td>
+                <td>
+                  <a class="btn-secondary" href="menu_form.php?id=<?php echo (int)$item['id']; ?>">Edit</a>
+                  <form method="post" class="action-row" onsubmit="return confirm('Delete this item?');">
+                    <input type="hidden" name="item_id" value="<?php echo (int)$item['id']; ?>" />
+                    <input type="hidden" name="delete_item" value="1" />
+                    <button class="btn-danger" type="submit">Delete</button>
+                  </form>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

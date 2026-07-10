@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | Flaver Heaven</title>
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+<div class="admin-shell">
+  <?php include_once 'sidebar.php'; ?>
+  <main class="main">
+    <div class="topbar">
+      <div>
+        <h2 class="page-title">Admin Dashboard</h2>
+        <p class="page-subtitle">Manage your restaurant operations from one place.</p>
+      </div>
+      <div class="topbar-meta">Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></div>
+    </div>
+
+    <div class="cards">
+      <div class="card"><h3>Total Users</h3><div class="value"><?php echo (int)$stats['users']; ?></div></div>
+      <div class="card"><h3>Total Orders</h3><div class="value"><?php echo (int)$stats['orders']; ?></div></div>
+      <div class="card"><h3>Today's Orders</h3><div class="value"><?php echo (int)$stats['today_orders']; ?></div></div>
+      <div class="card"><h3>Pending Orders</h3><div class="value"><?php echo (int)$stats['pending_orders']; ?></div></div>
+      <div class="card"><h3>Completed Orders</h3><div class="value"><?php echo (int)$stats['completed_orders']; ?></div></div>
+      <div class="card"><h3>Total Reservations</h3><div class="value"><?php echo (int)$stats['reservations']; ?></div></div>
+      <div class="card"><h3>Total Revenue</h3><div class="value">₹<?php echo number_format((float)$stats['revenue'], 2); ?></div></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <h3 class="panel-title">Recent Orders</h3>
+      </div>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>No.</th><th>Customer</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
+          <tbody>
+            <?php foreach ($recentOrders as $order): ?>
+              <tr>
+                <td><?php echo (int)$order['id']; ?></td>
+                <td><?php echo htmlspecialchars($order['username'] ?? 'Guest'); ?></td>
+                <td>₹<?php echo number_format((float)$order['total_amount'], 2); ?></td>
+                <td><span class="badge"><?php echo htmlspecialchars($order['order_status']); ?></span></td>
+                <td><?php echo htmlspecialchars($order['created_at']); ?></td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reservation Management | Flaver Heaven</title>
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+<div class="admin-shell">
+  <?php include_once 'sidebar.php'; ?>
+  <main class="main">
+    <div class="topbar"><div><h2 class="page-title">Reservation Management</h2><p class="page-subtitle">Approve, reject, and manage table bookings.</p></div></div>
+    <div class="panel">
+      <form method="get" class="search-form">
+        <input type="text" name="search" value="<?php echo htmlspecialchars($search); ?>" placeholder="Search by customer or username" class="search-input" />
+        <button class="btn" type="submit">Search</button>
+      </form>
+      <div class="table-wrap table-wrap--top">
+        <table class="table">
+          <thead><tr><th>No.</th><th>Customer</th><th>Mobile</th><th>Date</th><th>Time</th><th>Guests</th><th>Occasion</th><th>Method</th><th>Payment</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody>
+            <?php foreach ($reservations as $reservation): ?>
+              <?php $paymentStatus = $reservation['payment_status'] ?? 'pending'; ?>
+              <tr>
+                <td><?php echo (int)$reservation['id']; ?></td>
+                <td><?php echo htmlspecialchars($reservation['name']); ?></td>
+                <td><?php echo htmlspecialchars($reservation['phone'] ?? ''); ?></td>
+                <td><?php echo htmlspecialchars(formatReservationDate($reservation['reservation_date'])); ?></td>
+                <td><?php echo htmlspecialchars($reservation['reservation_time']); ?></td>
+                <td><?php echo (int)$reservation['guests']; ?></td>
+                <td><?php echo htmlspecialchars($reservation['event_type'] ?? '—'); ?></td>
+                <td><?php echo htmlspecialchars($reservation['payment_method'] ?: '—'); ?></td>
+                <td><span class="badge badge-<?php echo htmlspecialchars($paymentStatus); ?>"><?php echo htmlspecialchars(ucfirst($paymentStatus)); ?></span></td>
+                <td><span class="badge"><?php echo htmlspecialchars($reservation['status']); ?></span></td>
+                <td class="action-col">
+                  <form method="post" action="reservations.php" class="action-row">
+                    <input type="hidden" name="reservation_id" value="<?php echo (int)$reservation['id']; ?>" />
+                    <input type="hidden" name="update_status" value="1" />
+                    <select name="status">
+                      <option value="pending" <?php echo $reservation['status'] === 'pending' ? 'selected' : ''; ?>>Pending</option>
+                      <option value="approved" <?php echo $reservation['status'] === 'approved' ? 'selected' : ''; ?>>Approved</option>
+                      <option value="not available" <?php echo $reservation['status'] === 'not available' ? 'selected' : ''; ?>>Not Available</option>
+                      <option value="cancelled" <?php echo $reservation['status'] === 'cancelled' ? 'selected' : ''; ?>>Cancelled</option>
+                    </select>
+                    <button class="btn" type="submit">Save</button>
+                  </form>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+            <?php if (!$reservations): ?>
+              <tr><td colspan="11" class="empty-row">No reservations found.</td></tr>
+            <?php endif; ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

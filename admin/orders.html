@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Management | Flaver Heaven</title>
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+<div class="admin-shell">
+  <?php include_once 'sidebar.php'; ?>
+  <main class="main">
+    <div class="topbar"><div><h2 class="page-title">Order Management</h2><p class="page-subtitle">Track and manage customer orders.</p></div></div>
+    <div class="panel">
+      <form method="get" class="search-form">
+        <input type="text" name="search" value="<?php echo htmlspecialchars($search); ?>" placeholder="Search by customer or username" class="search-input" />
+        <button class="btn" type="submit">Search</button>
+      </form>
+      <div class="table-wrap table-wrap--top">
+        <table class="table">
+          <thead><tr><th>No.</th><th>Customer</th><th>Food Items</th><th>Special Instructions</th><th>Amount</th><th>Method</th><th>Delivery</th><th>Payment</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody>
+            <?php foreach ($orders as $order): ?>
+              <tr>
+                <td><?php echo (int)$order['id']; ?></td>
+                <td><?php echo htmlspecialchars($order['customer_name']); ?></td>
+                <td class="items-col"><?php echo htmlspecialchars(formatOrderItems($order['items_json'])); ?></td>
+                <td class="instructions-col"><?php echo htmlspecialchars($order['special_instructions'] !== '' && $order['special_instructions'] !== null ? $order['special_instructions'] : '—'); ?></td>
+                <td>₹<?php echo number_format((float)$order['total_amount'], 2); ?></td>
+                <td><?php echo htmlspecialchars($order['payment_method']); ?></td>
+                <td><?php echo htmlspecialchars(formatDateTime12hr($order['delivery_date'], $order['delivery_time'])); ?></td>
+                <td><span class="badge badge-<?php echo htmlspecialchars($order['payment_status']); ?>"><?php echo htmlspecialchars(ucfirst($order['payment_status'])); ?></span></td>
+                <td><span class="badge"><?php echo htmlspecialchars($order['order_status']); ?></span></td>
+                <td class="action-col">
+                  <form method="post" class="action-row">
+                    <input type="hidden" name="order_id" value="<?php echo (int)$order['id']; ?>" />
+                    <input type="hidden" name="update_status" value="1" />
+                    <select name="status">
+                      <option value="pending" <?php echo $order['order_status'] === 'pending' ? 'selected' : ''; ?>>Pending</option>
+                      <option value="preparing" <?php echo $order['order_status'] === 'preparing' ? 'selected' : ''; ?>>Preparing</option>
+                      <option value="out_for_delivery" <?php echo $order['order_status'] === 'out_for_delivery' ? 'selected' : ''; ?>>Out for Delivery</option>
+                      <option value="delivered" <?php echo $order['order_status'] === 'delivered' ? 'selected' : ''; ?>>Delivered</option>
+                      <option value="cancelled" <?php echo $order['order_status'] === 'cancelled' ? 'selected' : ''; ?>>Cancelled</option>
+                    </select>
+                    <button class="btn" type="submit">Save</button>
+                  </form>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>
