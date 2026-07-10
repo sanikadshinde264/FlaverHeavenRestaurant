@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Flavor Heaven - Full Stack Restaurant Project
 
 ## What is included
@@ -88,3 +89,6 @@ If your MySQL username/password is different from the default XAMPP values, upda
 4. User browses the menu, clicks cards, and the selected dishes are added to the cart.
 5. User checks out from the order section.
 6. Reservation data and order data are stored in the MySQL database.
+=======
+# FlaverHeavenRestaurant
+>>>>>>> f848c4e1df85f2c64dd60c6d117421369bfaaddf
