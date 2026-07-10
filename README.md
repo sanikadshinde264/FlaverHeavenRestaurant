@@ -1,94 +1,102 @@
-<<<<<<< HEAD
-# Flavor Heaven - Full Stack Restaurant Project
+# 🍽️ Flavor Heaven Restaurant
 
-## What is included
-- Responsive restaurant landing page
-- Login and sign-up flow connected to PHP + MySQL
-- Reservation form saving to the database
-- Cart-based ordering flow with order summary
-- Payment method, payment date, and payment time saved to the database
-- All user activity stored in MySQL tables
+A full-stack restaurant website with online ordering, table reservations, and a complete admin dashboard — built with PHP, MySQL, HTML, CSS, and vanilla JavaScript.
+
+## Features
+
+### Customer-facing
+- Responsive restaurant landing page with menu browsing by category (Veg / Non-Veg / Drinks / Desserts)
+- Cart-based food ordering with checkout (customer details, delivery date/time, special instructions, payment method)
+- Table reservation form
+- User signup / login (session-based auth)
+- Profile page showing order and reservation history
+
+### Admin panel (`/admin`)
+- Separate admin login and signup
+- Dashboard with key stats
+- Menu management (add / edit / delete items)
+- Order management (view items ordered, special instructions, delivery date & time, payment & order status)
+- Reservation management
+- Payments overview
+- User management
+- Reports
+
+### Access flow
+`access.html` is the entry point where a visitor chooses **User** or **Admin**:
+- **User** → `signup.html` (or `login.html` if already registered)
+- **Admin** → `admin/signup.php` (or `admin/login.php` if already registered)
+
+## Tech stack
+- **Frontend:** HTML, CSS, vanilla JavaScript
+- **Backend:** PHP 
+- **Database:** MySQL
 
 ## Folder structure
 ```text
-FlaverHeaven/
-├── index.html
-├── login.html
-├── login.js
-├── script.js
-├── style.css
-├── README.md
-└── api/
-    ├── config.php
-    ├── auth.php
-    ├── submit_reservation.php
-    ├── submit_order.php
-    └── db.sql
+FlaverHeavenRestaurant/
+├── index.html              Homepage
+├── access.html             Choose User or Admin
+├── login.html / signup.html         User auth pages
+├── login.js / signup.js
+├── profile.html / profile.php       User profile & order history
+├── logout.php
+├── script.js / style.css
+├── admin/
+│   ├── login.php / login_view.html       Admin auth
+│   ├── signup.php / signup_view.html
+│   ├── dashboard.php / dashboard.html
+│   ├── menu.php / menu.html / menu_form.php / menu_form.html
+│   ├── orders.php / orders.html
+│   ├── reservations.php / reservations.html
+│   ├── payments.php / payments.html
+│   ├── users.php / users.html
+│   ├── reports.php
+│   ├── sidebar.php
+│   └── logout.php
+├── api/
+│   ├── config.php           Database connection settings
+│   ├── auth.php             Login / register endpoint
+│   ├── session.php
+│   ├── menu.php
+│   ├── submit_order.php
+│   └── submit_reservation.php
+├── MySQL_Workbench/
+│   ├── db.sql               Full database schema (tables + default admin)
+│   └── menu_seed.sql        Sample menu data
+└── Images/
 ```
 
-## Step-by-step setup
-1. Install XAMPP and start Apache and MySQL.
-2. Copy this project folder into the XAMPP htdocs folder:
-   - Windows: C:\xampp\htdocs\FlaverHeaven
-3. Open phpMyAdmin at http://localhost/phpmyadmin
-4. Import the SQL file from [api/db.sql](api/db.sql)
-5. Open the app in your browser:
-   - http://localhost/FlaverHeaven/login.html
+## Setup (XAMPP)
 
-## Database setup
-Run the following SQL in phpMyAdmin or MySQL terminal:
-```sql
-CREATE DATABASE IF NOT EXISTS flaverheaven;
-USE flaverheaven;
+1. **Install XAMPP** and start **Apache** and **MySQL**.
 
-CREATE TABLE IF NOT EXISTS users (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  username VARCHAR(80) NOT NULL UNIQUE,
-  email VARCHAR(120) NOT NULL UNIQUE,
-  password_hash VARCHAR(255) NOT NULL,
-  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
+2. **Copy this project** into your XAMPP `htdocs` folder, e.g.:
+   ```
+   C:\xampp\htdocs\FlaverHeavenRestaurant
+   ```
 
-CREATE TABLE IF NOT EXISTS reservations (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL,
-  name VARCHAR(120) NOT NULL,
-  email VARCHAR(120) NOT NULL,
-  phone VARCHAR(25) NOT NULL,
-  reservation_date DATE NOT NULL,
-  reservation_time TIME NOT NULL,
-  guests INT NOT NULL,
-  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-);
+3. **Create the database.** Open phpMyAdmin (`http://localhost/phpmyadmin`) and import, in order:
+   - `MySQL_Workbench/db.sql` — creates the database and all tables
+   - `MySQL_Workbench/menu_seed.sql` — adds sample menu items
 
-CREATE TABLE IF NOT EXISTS orders (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL,
-  customer_name VARCHAR(120) NOT NULL,
-  mobile VARCHAR(25) NOT NULL,
-  address VARCHAR(255) NOT NULL,
-  items_json TEXT NOT NULL,
-  total_amount DECIMAL(10,2) NOT NULL,
-  payment_method VARCHAR(60) NOT NULL,
-  payment_status VARCHAR(30) NOT NULL DEFAULT 'paid',
-  payment_date DATE NOT NULL,
-  payment_time TIME NOT NULL,
-  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-);
-```
+4. **Set your database credentials** in `api/config.php`:
+   ```php
+   $host = '127.0.0.1';
+   $port = 3306;
+   $user = 'root';
+   $pass = ''; // <-- change to match your MySQL setup
+   $dbName = 'flaverheaven';
+   ```
+   > If you're using XAMPP's bundled MySQL, the default root password is usually **empty** (`$pass = '';`), not `root`.
 
-## Important note
-If your MySQL username/password is different from the default XAMPP values, update the database settings in [api/config.php](api/config.php).
+5. **Open the site:**
+   ```
+   http://localhost/FlaverHeavenRestaurant/access.html
+   ```
 
-## How the flow works
-1. User opens the login page.
-2. User signs in or creates an account.
-3. The account details are stored in the users table.
-4. User browses the menu, clicks cards, and the selected dishes are added to the cart.
-5. User checks out from the order section.
-6. Reservation data and order data are stored in the MySQL database.
-=======
-# FlaverHeavenRestaurant
->>>>>>> f848c4e1df85f2c64dd60c6d117421369bfaaddf
+6. **Create an account:**
+   - Click **Login** in the navbar → choose **User** or **Admin** on `access.html`.
+   - Admin signup only needs a username and password.
+
+## License
+This project is for educational purposes.
