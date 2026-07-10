@@ -15,7 +15,7 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $host = '127.0.0.1';
 $port = 3306;
 $user = 'root';
-$pass = 'root'; // <-- replace with your actual MySQL Workbench root password
+$pass = ''; // <-- replace with your actual MySQL Workbench root password
 $dbName = 'flaverheaven';
 
 try {
