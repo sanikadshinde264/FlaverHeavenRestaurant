@@ -62,7 +62,7 @@ This project doesn't use a static dataset — data is created and stored live in
 2. **Backend API:** Built PHP endpoints under `api/` for authentication, session handling, menu retrieval, order submission, and reservation submission.
 3. **Customer frontend:** Built the landing page, menu browsing, cart, checkout, and profile pages with HTML/CSS/JS, calling the PHP API endpoints via fetch requests.
 4. **Admin panel:** Built a separate authenticated area under `admin/` with its own login/signup, dashboard, and CRUD pages for menu, orders, reservations, payments, and users.
-5. **Session-based auth:** Implemented login/logout and session checks (`session.php`, `logout.php`) to protect user and admin areas.
+5. **Session-based auth:** Implemented login/logout and session checks to protect user and admin areas.
 6. **Seeding & testing:** Used `menu_seed.sql` to populate sample menu data for local development and testing.
 
 ---
