@@ -26,7 +26,7 @@ Small restaurants often rely on phone calls, walk-ins, or third-party platforms 
 - User signup / login (session-based authentication)
 - Profile page showing order and reservation history
 
-### 🛠️ Admin panel (`/admin`)
+### 🛠️ Admin panel
 - Separate admin login and signup
 - Dashboard with key stats
 - Menu management (add / edit / delete items)
